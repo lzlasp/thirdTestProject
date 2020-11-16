@@ -90,6 +90,7 @@
       <ConformanceMode>true</ConformanceMode>
       <PrecompiledHeader>Use</PrecompiledHeader>
       <PrecompiledHeaderFile>pch.h</PrecompiledHeaderFile>
+      <AdditionalIncludeDirectories>libs\libebur128-1.2.4\queue;libs\libebur128-1.2.4;libs\sqlite-3.31.1;%(AdditionalIncludeDirectories)</AdditionalIncludeDirectories>
     </ClCompile>
     <Link>
       <SubSystem>Windows</SubSystem>
@@ -148,6 +149,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClInclude Include="CDDAManager.h" />
+    <ClInclude Include="Database.h" />
     <ClInclude Include="Decoder.h" />
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="FolderMonitor.h" />
@@ -159,10 +161,12 @@
     <ClInclude Include="Settings.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="thirdTestProject.h" />
+    <ClInclude Include="Utility.h" />
     <ClInclude Include="WndTree.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="CDDAManager.cpp" />
+    <ClCompile Include="Database.cpp" />
     <ClCompile Include="Decoder.cpp" />
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="FolderMonitor.cpp" />
@@ -176,6 +180,7 @@
     <ClCompile Include="Playlist.cpp" />
     <ClCompile Include="Settings.cpp" />
     <ClCompile Include="thirdTestProject.cpp" />
+    <ClCompile Include="Utility.cpp" />
     <ClCompile Include="WndTree.cpp" />
   </ItemGroup>
   <ItemGroup>
