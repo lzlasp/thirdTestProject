@@ -156,6 +156,7 @@
     <ClInclude Include="framework.h" />
     <ClInclude Include="Handler.h" />
     <ClInclude Include="Library.h" />
+    <ClInclude Include="MediaInfo.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Playlist.h" />
     <ClInclude Include="Resource.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="FolderMonitor.cpp" />
     <ClCompile Include="Library.cpp" />
+    <ClCompile Include="MediaInfo.cpp" />
     <ClCompile Include="pch.cpp">
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">Create</PrecompiledHeader>
       <PrecompiledHeader Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">Create</PrecompiledHeader>

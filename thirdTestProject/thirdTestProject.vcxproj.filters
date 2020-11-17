@@ -13,6 +13,7 @@
     <ClCompile Include="thirdTestProject.cpp" />
     <ClCompile Include="Utility.cpp" />
     <ClCompile Include="WndTree.cpp" />
+    <ClCompile Include="MediaInfo.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="CDDAManager.h" />
@@ -32,6 +33,7 @@
     <ClInclude Include="WndTree.h" />
     <ClInclude Include="Tag.h" />
     <ClInclude Include="Handler.h" />
+    <ClInclude Include="MediaInfo.h" />
   </ItemGroup>
   <ItemGroup>
     <ResourceCompile Include="thirdTestProject.rc" />

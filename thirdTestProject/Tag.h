@@ -7,6 +7,7 @@ enum class Tag
 {
 	Artist,
 	Title,
+	Album,
 	Genre,
 	Year,
 	Comment,
