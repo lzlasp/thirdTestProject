@@ -154,11 +154,13 @@
     <ClInclude Include="Encoder.h" />
     <ClInclude Include="FolderMonitor.h" />
     <ClInclude Include="framework.h" />
+    <ClInclude Include="Handler.h" />
     <ClInclude Include="Library.h" />
     <ClInclude Include="pch.h" />
     <ClInclude Include="Playlist.h" />
     <ClInclude Include="Resource.h" />
     <ClInclude Include="Settings.h" />
+    <ClInclude Include="Tag.h" />
     <ClInclude Include="targetver.h" />
     <ClInclude Include="thirdTestProject.h" />
     <ClInclude Include="Utility.h" />

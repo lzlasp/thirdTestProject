@@ -5,6 +5,7 @@
 
 class Encoder
 {
+public:
 	Encoder()
 	{
 
