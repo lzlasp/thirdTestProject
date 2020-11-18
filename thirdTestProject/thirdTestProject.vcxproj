@@ -155,6 +155,7 @@
     <ClInclude Include="FolderMonitor.h" />
     <ClInclude Include="framework.h" />
     <ClInclude Include="Handler.h" />
+    <ClInclude Include="Handlers.h" />
     <ClInclude Include="Library.h" />
     <ClInclude Include="MediaInfo.h" />
     <ClInclude Include="pch.h" />
@@ -173,6 +174,7 @@
     <ClCompile Include="Decoder.cpp" />
     <ClCompile Include="Encoder.cpp" />
     <ClCompile Include="FolderMonitor.cpp" />
+    <ClCompile Include="Handlers.cpp" />
     <ClCompile Include="Library.cpp" />
     <ClCompile Include="MediaInfo.cpp" />
     <ClCompile Include="pch.cpp">

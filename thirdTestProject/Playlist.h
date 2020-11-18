@@ -176,5 +176,115 @@ public:
 	//	Returns the number of items in the playlist.
 	long GetCount();
 
+	// Returns the total playlist duration, in seconds.
+	long GetDuration();
+
+	// Returns the total playlist file szie, in bytes.
+	long long GetFilesize();
+
+	/*	Gets the current playlist sort information.
+	*	'column' - out, sort type (or 'undefined' if not sorted).
+	*	'ascending' - out, true if sorted in ascending order, false if in descending order (only valid if sorted).
+	*/
+	void GetSort(Column& column, bool& ascending) const;
+
+	//	Sorts the playlist by 'column', in ascending order if not already sorted by 'column', descending order otherwise.
+	void Sort(const Column column);
+	
+	/*	Updates the playlist media information.
+	*	'mediaInfo' - media information.
+	*	Returns true if any playlist items matched the 'mediaInfo' filename, and were updated.
+	*/
+	bool OnUpdatedMedia(const MediaInfo& mediaInfo);
+	
+	/*	Move 'item' to a 'position' in the playlist.
+	*	Returns whether any items  have effectviely moved position.
+	*/
+	bool MoveItems(const int position, const std::list<long>& item);
+
+	// Returns the playlist type.
+	Type GetType() const;
+
+	//	Sets whether duplicate playlist items should be merged.
+	void SetMergeDuplicates(const bool merge);
+
+	// Updates the 'item' in the playlist.
+	void UpdateItem(const Item& item);
+
+private:
+	//Pending file thread proc.
+	static DWORD WINAPI PendingThreadProc(LPVOID lpParam);
+
+	// Returns true if 'item1' is less than 'item2' when comparing by 'column' type.
+	static bool LessThan(const Item& item1, const Item& item2, const Column column);
+	
+	// Returns true if 'item1' is greater than 'item2' when comparing by 'column' type.
+	static bool GreaterThan(const Item& imte1, const Item& item2, const Column column);
+
+	// Next available playlist item ID.
+	static long s_NextItemID;
+
+	// Thread handler for processing the list of pending files.
+	void OnPendingThreadHandler();
+
+	// Returns whether the playlist contains 'filename'.
+	bool ContainsFilename(const std::wstring& filename);
+
+	// Merge any duplicate itemss.
+	void MergeDuplicates();
+
+	// Splits out any duplicates into separeate items.
+	void SplitDuplicates();
+
+	// Closes the thread and event handles.
+	void Closehandles();
+
+	// Playlist ID.
+	const std::string m_ID;
+
+	// Playlist name.
+	std::wstring m_Name;
+
+	// the Playlist.
+	ItemList m_Playlist;
+
+	// Pending files to be added the playlist.
+	std::list<std::wstring> m_Pending;
+
+	//	Playlist mutex.
+	std::mutex m_MutexPlaylist;
+
+	// Pending file mutex.
+	std::mutex m_MutexPending;
+
+	// The thread for adding files to the playlist.
+	HANDLE m_PendingThread;
+
+	//  Event handle for terminating the pending file thread.
+	HANDLE m_PendingStopEvent;
+
+	// Event handle for waking the pending file thread.
+	HANDLE m_PendingWakeEvent;
+
+	// Indicates 
+	std::atomic<bool> m_RestartPendingThread;
+
+	// Media library.
+	Library& m_Library;
+
+	// Current sort column.
+	Column m_SortColumn;
+
+	// Whether the list is sorted in ascending order.
+	bool m_SortAscending;
+
+	// playlist type.
+	Type m_Type;
+
+	// Whether duplicate times should be merged into a single playlist entry.
+	bool m_MergeDuplicates;
+
 };
 
+// A list of playlist.
+typedef std::list<Playlist::Ptr> Playlists;
