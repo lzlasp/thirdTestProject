@@ -56,12 +56,12 @@ class WndTree
 	Playlist::Ptr NewPlaylist();
 
 	// Deletes the currently selected playlist.
-	DeleteSelectedPlaylist();
+	void DeleteSelectedPlaylist();
 
 	/*	Import a playlist.
 	*	'filename' - the playlist to import, or an empty string to launch a file selection dialog.
 	*/
-	void InmportPlaylist(const std::wstring& filename = std::wstring());
+	void ImportPlaylist(const std::wstring& filename = std::wstring());
 
 	// Launches a file selector dialog to export the currently selected playlist.
 	void ExportSelectedPlaylist();
@@ -69,8 +69,8 @@ class WndTree
 	// Selects a 'playlist'.
 	void SelectPlaylist(const Playlist::Ptr playlist);
 
-	//
-
+	// Selects, and shows if necessary, the 'All Tracks' playlist.
+	void SelectAllTracks();
 
 
 };

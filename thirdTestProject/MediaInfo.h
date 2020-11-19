@@ -17,6 +17,7 @@ static const float LOUDNESS_REFERENCE = -18.0f;
 // Media information.
 class MediaInfo
 {
+public:
 	// A list of media information.
 	typedef std::list<MediaInfo> List;
 
