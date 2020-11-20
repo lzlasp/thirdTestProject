@@ -2,6 +2,8 @@
 
 #include "Library.h"
 
+#include <atomic>
+
 class Playlist
 {
 public:
