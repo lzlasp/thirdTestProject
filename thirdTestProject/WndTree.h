@@ -384,7 +384,7 @@ private:
 	void LoadFavourites();
 
 	// Returns the item order for root 'item'.
-	LPARAM WndTree::GetItemOrder(const HTREEITEM item) const;
+	LPARAM GetItemOrder(const HTREEITEM item) const;
 
 	// Returns the tree insertion position for a root item corresponding to a playlist 'type'.
 	HTREEITEM GetInsertAfter();
@@ -528,7 +528,7 @@ private:
 	Playlist::Ptr m_PlaylistFavourites;
 
 	// The font resulting from the font selection dialog.
-	Playlist::Ptr m_ChosenFont;
+	HFONT m_ChosenFont;
 
 	// Hightlight colour.
 	COLORREF m_ColourHighlight;
