@@ -117,7 +117,10 @@ std::wstring WideStringJoin(const std::list<std::wstring>& parts, const wchar_t 
 
 float GetDPIScaling()
 {
-	return 0.0f;
+	HDC hdc = GetDC(NULL);
+	const float scaling = static_cast<float>(GetDeviceCaps(hdc, LOGPIXELSX)) / 96;
+	ReleaseDC(0, hdc);
+	return scaling;
 }
 
 long long GetRandomNumber(const long long minimum, const long long maximum)

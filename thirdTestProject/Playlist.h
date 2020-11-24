@@ -88,7 +88,7 @@ public:
 	typedef std::set<Playlist::Ptr> Set;
 
 	// Gets the playlist ID.
-	const std::wstring& GetID() const;
+	const std::string& GetID() const;
 
 	// Gets the playlist ID.
 	const std::wstring& GetName() const;

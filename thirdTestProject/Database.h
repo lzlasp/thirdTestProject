@@ -9,6 +9,7 @@
 
 class Database
 {
+public:
 	//Database access mode.
 	enum class Mode
 	{

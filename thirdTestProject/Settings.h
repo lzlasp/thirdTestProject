@@ -576,7 +576,7 @@ private:
 	void ImportSettings(const std::string& input);
 
 	// Returns whether a GUID string is valid.
-	static bool IsValueGUID(const std::string& guid);
+	static bool IsValidGUID(const std::string& guid);
 
 	// Database.
 	Database& m_Database;

@@ -4,6 +4,8 @@
 #include <PathCch.h>
 #include <Shlwapi.h>
 #include <Uxtheme.h>
+#include <fstream>
+
 
 // Tree control ID.
 static const UINT_PTR s_WndTreeID = 1900;
@@ -20,13 +22,22 @@ static const std::string s_ScratchListID = "F641E764-3385-428A-9F39-88E928234E17
 // Initial folder setting for choosing playlists.
 static const std::string s_PlaylistFolderSetting = "Playlist";
 
-//
+/* Message ID for adding a folder to the computer node.
+*  'wParam' : HTREEITEM - the parent item inder which to add the folder.
+*  'lParam' : std::wstring* - folder name, to be deleted by the message handler.
+*/
 static const UINT MSG_FOLDERADD = WM_APP + 110;
 
-//
+/* Message ID for deleting a folder from the computer node.
+*  'wParam' : HTREEITEM - th item to delete.
+*  'lParam' : unused.
+*/
 static const UINT MSG_FOLDERDELETE = WM_APP + 111;
 
-//
+/* Message ID for renaming a folder in the computer node.
+*  'wParam' : std::wstring* - old folder path, to be deleted by the message handler.
+*  'lParam' : std::wstring* - new folder path, to be deleted by the message handler. 
+*/
 static const UINT MSG_FOLDERRENAME = WM_APP + 112;
 
 // Root item ordering.
@@ -104,10 +115,64 @@ WndTree::WndTree(HINSTANCE instance, HWND parent, Library& library, Settings& se
 	CreateImageList();
 }
 
+LRESULT CALLBACK WndTree::TreeProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
+{
+	WndTree* wndTree = reinterpret_cast<WndTree*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
+	if (nullptr != wndTree)
+	{
+		switch (message)
+		{
+			case WM_COMMAND:
+			{
+				const UINT commandID = LOWORD(wParam);
+				wndTree->OnCommand(commandID);
+				break;
+			}
+		}
+	}
+
+}
+
+void WndTree::OnCommand(const UINT command)
+{
+	switch (command)
+	{
+		case ID_FILE_NEWPLAYLIST:
+		{
+			NewPlaylist();
+			break;
+		}
+		case ID_FILE_DELETEPLAYLIST:
+		{
+			DeleteSelectedPlaylist();
+			break;
+		}
+		case ID_FILE_RENAMEPLAYLIST:
+		{
+			RenameSelectedPlaylist();
+			break;
+		}
+		case ID_FILE_IMPORTPLAYLIST:
+		{
+			ImportPlaylist();
+			break;
+		}
+		default:
+			break;
+	}
+}
 
 
-
-
+int WndTree::GetIconIndex(const Playlist::Type type) const
+{
+	int iconIndex = 0;
+	const auto iter = m_IconMap.find(type);
+	if (m_IconMap.end() != iter)
+	{
+		iconIndex = iter->second;
+	}
+	return iconIndex;
+}
 
 LPARAM WndTree::GetItemOrder(const HTREEITEM item) const
 {
@@ -117,4 +182,103 @@ LPARAM WndTree::GetItemOrder(const HTREEITEM item) const
 	TreeView_GetItem(m_hWnd, &tvItem);
 	const LPARAM order = HIWORD(tvItem.lParam);
 	return order;
+}
+
+Playlist::Ptr WndTree::NewPlaylist()
+{
+	const int bufSize = 32;
+	WCHAR buffer[bufSize] = {};
+
+	std::wstring uniqueName = buffer;
+	const std::set<std::wstring> allNames = GetPlaylistNames();
+	auto nameIter = allNames.find(uniqueName);
+	int playlistNum = 1;
+	while (allNames.end() != nameIter)
+	{
+		uniqueName = buffer;
+		uniqueName += L" (" + std::to_wstring(++playlistNum) + L")";
+		nameIter = allNames.find(uniqueName);
+	}
+	wcscpy_s(buffer, bufSize, uniqueName.c_str());
+
+	TVITEMEX tvItem = {};
+	tvItem.mask = TVIF_TEXT | TVIF_PARAM | TVIF_IMAGE | TVIF_SELECTEDIMAGE;
+	tvItem.pszText = buffer;
+	tvItem.lParam = static_cast<LPARAM>(Playlist::Type::User);
+	tvItem.iImage = GetIconIndex(Playlist::Type::User);
+	tvItem.iSelectedImage = tvItem.iImage;
+	TVINSERTSTRUCT tvInsert = {};
+	tvInsert.hParent = m_NodePlaylists;
+	tvInsert.hInsertAfter = TVI_SORT;
+	tvInsert.itemex = tvItem;
+	TreeView_SelectItem(m_hWnd, NULL/*hITem*/);
+	HTREEITEM hItem = TreeView_InsertItem(m_hWnd, &tvInsert);
+
+	Playlist::Ptr playlist(new Playlist(m_Library, Playlist::Type::User));
+	m_PlaylistMap.insert(PlaylistMap::value_type(hItem, playlist));
+
+	SetFocus(m_hWnd);
+	TreeView_SelectItem(m_hWnd, hItem);
+	TreeView_EditLabel(m_hWnd, hItem);
+
+	return playlist;
+}
+
+void WndTree::DeleteSelectedPlaylist()
+{
+	HTREEITEM hSelectedItem = TreeView_GetSelection(m_hWnd);
+	const auto playlistIter = m_PlaylistMap.find(hSelectedItem);
+	if (m_PlaylistMap.end() != playlistIter)
+	{
+		const Playlist::Ptr playlist = playlistIter->second;
+		if (playlist)
+		{
+			m_Settings.RemovePlaylist(*playlist);
+			m_PlaylistMap.erase(playlistIter);
+			TreeView_DeleteItem(m_hWnd, hSelectedItem);
+		}
+	}
+}
+
+std::wstring WndTree::GetItemLabel(const HTREEITEM item) const
+{
+	const int bufferSize=256;
+	WCHAR buffer[bufferSize] = {};
+	TVITEMEX tvItem = {};
+	tvItem.mask = TVIF_TEXT;
+	tvItem.hItem = item;
+	tvItem.cchTextMax = bufferSize;
+	tvItem.pszText = buffer;
+	if (nullptr != item)
+	{
+		TreeView_GetItem(m_hWnd, &tvItem);
+	}
+	const std::wstring label = buffer;
+	return buffer;
+}
+
+std::set<std::wstring> WndTree::GetPlaylistNames() const
+{
+	std::set<std::wstring> names;
+	if (nullptr != m_NodePlaylists)
+	{
+		HTREEITEM playlistItem = TreeView_GetChild(m_hWnd, m_NodePlaylists);
+		while (nullptr != playlistItem)
+		{
+			names.insert(GetItemLabel(playlistItem));
+			playlistItem = TreeView_GetNextSibling(m_hWnd, playlistItem);
+		}
+	}
+	return names;
+}
+
+void WndTree::RenameSelectedPlaylist()
+{
+	TreeView_EditLabel(m_hWnd, TreeView_GetSelection(m_hWnd));
+
+}
+
+void WndTree::ImportPlaylist(const std::wstring& filename)
+{
+
 }

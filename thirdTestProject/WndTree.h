@@ -6,6 +6,7 @@
 #include "Settings.h"
 #include "CDDAManager.h"
 #include "FolderMonitor.h"
+#include "resource.h"
 
 #include <CommCtrl.h>
 
