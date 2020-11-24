@@ -4,9 +4,16 @@
 #include <PathCch.h>
 #include <Shlwapi.h>
 #include <Uxtheme.h>
+<<<<<<< HEAD
 #include <fstream>
 
+=======
+#include <windowsx.h>
+>>>>>>> a6f8ae015e913b8bf8fe8a9bf2d5e43b80ef6e58
 
+#include <fstream>
+
+#include "Utility.h"
 // Tree control ID.
 static const UINT_PTR s_WndTreeID = 1900;
 
@@ -115,6 +122,7 @@ WndTree::WndTree(HINSTANCE instance, HWND parent, Library& library, Settings& se
 	CreateImageList();
 }
 
+<<<<<<< HEAD
 LRESULT CALLBACK WndTree::TreeProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	WndTree* wndTree = reinterpret_cast<WndTree*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
@@ -159,6 +167,27 @@ void WndTree::OnCommand(const UINT command)
 		}
 		default:
 			break;
+=======
+WndTree::~WndTree()
+{
+	SetWindowLongPtr(m_hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(m_DefaultWndProc));
+	if (nullptr != m_ChosenFont)
+	{
+		DeleteObject(m_ChosenFont);
+	}
+	ImageList_Destroy(m_ImageList);
+	if (nullptr != m_ScratchListUpdateStopEvent)
+	{
+		CloseHandle(m_ScratchListUpdateStopEvent);
+	}
+	if (nullptr != m_FileModifiedStopEvent)
+	{
+		CloseHandle(m_FileModifiedStopEvent);
+	}
+	if (nullptr != m_FileModifiedWakeEvent)
+	{
+		CloseHandle(m_FileModifiedWakeEvent);
+>>>>>>> a6f8ae015e913b8bf8fe8a9bf2d5e43b80ef6e58
 	}
 }
 
@@ -184,6 +213,7 @@ LPARAM WndTree::GetItemOrder(const HTREEITEM item) const
 	return order;
 }
 
+<<<<<<< HEAD
 Playlist::Ptr WndTree::NewPlaylist()
 {
 	const int bufSize = 32;
@@ -280,5 +310,29 @@ void WndTree::RenameSelectedPlaylist()
 
 void WndTree::ImportPlaylist(const std::wstring& filename)
 {
+=======
+void WndTree::ApplySettings()
+{
+	LOGFONT logFont = GetFont();
+	COLORREF fontColour = TreeView_GetTextColor(m_hWnd);
+	COLORREF backgroundColour = TreeView_GetBkColor(m_hWnd);
+	bool favourites = false;
+	bool allTracks = false;
+	bool artists = false;
+	bool albums = false;
+	bool genres = false;
+	bool years = false;
+	m_Settings.GetTreeSettings(logFont, fontColour, backgroundColour, m_ColourHighlight, favourites, allTracks, artists, albums, genres, years);
+	TreeView_SetTextColor(m_hWnd, fontColour);
+	TreeView_SetBkColor(m_hWnd, backgroundColour);
+	SetFont(logFont);
+}
+
+void WndTree::CreateImageList()
+{
+	const float dpiScale = GetDPIScaling();
+
+
+>>>>>>> a6f8ae015e913b8bf8fe8a9bf2d5e43b80ef6e58
 
 }

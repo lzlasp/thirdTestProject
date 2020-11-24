@@ -58,7 +58,11 @@ void Settings::GetTreeSettings(LOGFONT& font, COLORREF& fontColour, COLORREF& ba
 		{
 			if ((SQLITE_ROW == sqlite3_step(stmt)))
 			{
+<<<<<<< HEAD
 				showArtists = (0 != sqlite3_column_int(stmt, 0));
+=======
+			showArtists = (0 != sqlite3_column_int(stmt, 0));
+>>>>>>> a6f8ae015e913b8bf8fe8a9bf2d5e43b80ef6e58
 			}
 			sqlite3_finalize(stmt);
 		}
@@ -94,6 +98,7 @@ void Settings::GetTreeSettings(LOGFONT& font, COLORREF& fontColour, COLORREF& ba
 		}
 	}
 }
+<<<<<<< HEAD
 
 void Settings::RemovePlaylist(const Playlist& playlist)
 {
@@ -134,3 +139,5 @@ bool Settings::IsValidGUID(const std::string& guid)
 	delete[] rpcStr;
 	return valid;
 }
+=======
+>>>>>>> a6f8ae015e913b8bf8fe8a9bf2d5e43b80ef6e58

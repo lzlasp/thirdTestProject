@@ -119,7 +119,11 @@ float GetDPIScaling()
 {
 	HDC hdc = GetDC(NULL);
 	const float scaling = static_cast<float>(GetDeviceCaps(hdc, LOGPIXELSX)) / 96;
+<<<<<<< HEAD
 	ReleaseDC(0, hdc);
+=======
+	ReleaseDC(0,hdc);
+>>>>>>> a6f8ae015e913b8bf8fe8a9bf2d5e43b80ef6e58
 	return scaling;
 }
 
