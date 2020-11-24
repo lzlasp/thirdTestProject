@@ -5,6 +5,8 @@
 // Windows 头文件
 #include <windows.h>
 #include<string>
+#include <commdlg.h>
+#include <ShlObj.h>
 
 // C 运行时头文件
 #include <stdlib.h>

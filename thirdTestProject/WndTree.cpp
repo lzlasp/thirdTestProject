@@ -4,7 +4,11 @@
 #include <PathCch.h>
 #include <Shlwapi.h>
 #include <Uxtheme.h>
+#include <windowsx.h>
 
+#include <fstream>
+
+#include "Utility.h"
 // Tree control ID.
 static const UINT_PTR s_WndTreeID = 1900;
 
@@ -104,8 +108,27 @@ WndTree::WndTree(HINSTANCE instance, HWND parent, Library& library, Settings& se
 	CreateImageList();
 }
 
-
-
+WndTree::~WndTree()
+{
+	SetWindowLongPtr(m_hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(m_DefaultWndProc));
+	if (nullptr != m_ChosenFont)
+	{
+		DeleteObject(m_ChosenFont);
+	}
+	ImageList_Destroy(m_ImageList);
+	if (nullptr != m_ScratchListUpdateStopEvent)
+	{
+		CloseHandle(m_ScratchListUpdateStopEvent);
+	}
+	if (nullptr != m_FileModifiedStopEvent)
+	{
+		CloseHandle(m_FileModifiedStopEvent);
+	}
+	if (nullptr != m_FileModifiedWakeEvent)
+	{
+		CloseHandle(m_FileModifiedWakeEvent);
+	}
+}
 
 
 
@@ -117,4 +140,29 @@ LPARAM WndTree::GetItemOrder(const HTREEITEM item) const
 	TreeView_GetItem(m_hWnd, &tvItem);
 	const LPARAM order = HIWORD(tvItem.lParam);
 	return order;
+}
+
+void WndTree::ApplySettings()
+{
+	LOGFONT logFont = GetFont();
+	COLORREF fontColour = TreeView_GetTextColor(m_hWnd);
+	COLORREF backgroundColour = TreeView_GetBkColor(m_hWnd);
+	bool favourites = false;
+	bool allTracks = false;
+	bool artists = false;
+	bool albums = false;
+	bool genres = false;
+	bool years = false;
+	m_Settings.GetTreeSettings(logFont, fontColour, backgroundColour, m_ColourHighlight, favourites, allTracks, artists, albums, genres, years);
+	TreeView_SetTextColor(m_hWnd, fontColour);
+	TreeView_SetBkColor(m_hWnd, backgroundColour);
+	SetFont(logFont);
+}
+
+void WndTree::CreateImageList()
+{
+	const float dpiScale = GetDPIScaling();
+
+
+
 }
