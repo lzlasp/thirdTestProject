@@ -1,1 +1,52 @@
-﻿
+﻿  pch.cpp
+  CDDAManager.cpp
+  Database.cpp
+D:\git_project\thirdTestProject\thirdTestProject\Database.cpp(148,1): fatal error C1010: 在查找预编译头时遇到意外的文件结尾。是否忘记了向源中添加“#include "pch.h"”?
+  Decoder.cpp
+D:\git_project\thirdTestProject\thirdTestProject\Decoder.cpp(103,18): error C2065: “LOUDNESS_REFERENCE”: 未声明的标识符
+  Encoder.cpp
+  FolderMonitor.cpp
+  Handlers.cpp
+  Library.cpp
+  MediaInfo.cpp
+  The contents of <filesystem> are available only with C++17 or later.
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(198,1): error C2084: 函数“void MediaInfo::SetTitle(const std::wstring &)”已有主体
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(181): message : 参见“SetTitle”的前一个定义
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(313,14): error C3083: “filesystem”:“::”左侧的符号必须是一种类型
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(313,26): error C2039: "path": 不是 "std" 的成员
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.26.28801\include\set(23): message : 参见“std”的声明
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(313,31): error C4430: 缺少类型说明符 - 假定为 int。注意: C++ 不支持默认 int
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(313,31): error C2146: 语法错误: 缺少“;”(在标识符“filePath”的前面)
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(313,31): error C3861: “filePath”: 找不到标识符
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(314,105): error C2065: “artworkFileType”: 未声明的标识符
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(314,123): error C2065: “artworkFileType”: 未声明的标识符
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(318,10): error C3083: “filesystem”:“::”左侧的符号必须是一种类型
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(318,22): error C2039: "path": 不是 "std" 的成员
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.26.28801\include\set(23): message : 参见“std”的声明
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(318,27): error C2146: 语法错误: 缺少“;”(在标识符“artworkPath”的前面)
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(318,27): error C2065: “artworkPath”: 未声明的标识符
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(318,39): error C2065: “filePath”: 未声明的标识符
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(319,5): error C2065: “artworkPath”: 未声明的标识符
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(320,14): error C3083: “filesystem”:“::”左侧的符号必须是一种类型
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(320,26): error C2039: "exists": 不是 "std" 的成员
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Professional\VC\Tools\MSVC\14.26.28801\include\set(23): message : 参见“std”的声明
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(320,33): error C2065: “artworkPath”: 未声明的标识符
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(320,8): error C3861: “exists”: 找不到标识符
+D:\git_project\thirdTestProject\thirdTestProject\MediaInfo.cpp(322,18): error C2065: “artworkPath”: 未声明的标识符
+  Playlist.cpp
+  Settings.cpp
+D:\git_project\thirdTestProject\thirdTestProject\Settings.h(189,26): error C2535: “Playlists Settings::GetPlaylists(void)”: 已经定义或声明成员函数
+D:\git_project\thirdTestProject\thirdTestProject\Settings.h(183): message : 参见“Settings::GetPlaylists”的声明
+D:\git_project\thirdTestProject\thirdTestProject\Settings.h(192,31): error C2535: “Playlist::Ptr Settings::GetFavourites(void)”: 已经定义或声明成员函数
+D:\git_project\thirdTestProject\thirdTestProject\Settings.h(186): message : 参见“Settings::GetFavourites”的声明
+  thirdTestProject.cpp
+  Utility.cpp
+D:\git_project\thirdTestProject\thirdTestProject\Utility.cpp(189,1): fatal error C1010: 在查找预编译头时遇到意外的文件结尾。是否忘记了向源中添加“#include "pch.h"”?
+  WndTree.cpp
+D:\git_project\thirdTestProject\thirdTestProject\Settings.h(189,26): error C2535: “Playlists Settings::GetPlaylists(void)”: 已经定义或声明成员函数
+D:\git_project\thirdTestProject\thirdTestProject\Settings.h(183): message : 参见“Settings::GetPlaylists”的声明
+D:\git_project\thirdTestProject\thirdTestProject\Settings.h(192,31): error C2535: “Playlist::Ptr Settings::GetFavourites(void)”: 已经定义或声明成员函数
+D:\git_project\thirdTestProject\thirdTestProject\Settings.h(186): message : 参见“Settings::GetFavourites”的声明
+D:\git_project\thirdTestProject\thirdTestProject\WndTree.cpp(338,54): error C2065: “IDI_PLAYLSIT”: 未声明的标识符
+  正在编译...
+  正在生成代码...

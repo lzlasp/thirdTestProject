@@ -4,12 +4,11 @@
 #include <PathCch.h>
 #include <Shlwapi.h>
 #include <Uxtheme.h>
-<<<<<<< HEAD
+
 #include <fstream>
 
-=======
 #include <windowsx.h>
->>>>>>> a6f8ae015e913b8bf8fe8a9bf2d5e43b80ef6e58
+
 
 #include <fstream>
 
@@ -122,7 +121,7 @@ WndTree::WndTree(HINSTANCE instance, HWND parent, Library& library, Settings& se
 	CreateImageList();
 }
 
-<<<<<<< HEAD
+
 LRESULT CALLBACK WndTree::TreeProc(HWND hwnd, UINT message, WPARAM wParam, LPARAM lParam)
 {
 	WndTree* wndTree = reinterpret_cast<WndTree*>(GetWindowLongPtr(hwnd, GWLP_USERDATA));
@@ -145,29 +144,31 @@ void WndTree::OnCommand(const UINT command)
 {
 	switch (command)
 	{
-		case ID_FILE_NEWPLAYLIST:
-		{
-			NewPlaylist();
-			break;
-		}
-		case ID_FILE_DELETEPLAYLIST:
-		{
-			DeleteSelectedPlaylist();
-			break;
-		}
-		case ID_FILE_RENAMEPLAYLIST:
-		{
-			RenameSelectedPlaylist();
-			break;
-		}
-		case ID_FILE_IMPORTPLAYLIST:
-		{
-			ImportPlaylist();
-			break;
-		}
-		default:
-			break;
-=======
+	case ID_FILE_NEWPLAYLIST:
+	{
+		NewPlaylist();
+		break;
+	}
+	case ID_FILE_DELETEPLAYLIST:
+	{
+		DeleteSelectedPlaylist();
+		break;
+	}
+	case ID_FILE_RENAMEPLAYLIST:
+	{
+		RenameSelectedPlaylist();
+		break;
+	}
+	case ID_FILE_IMPORTPLAYLIST:
+	{
+		ImportPlaylist();
+		break;
+	}
+	default:
+		break;
+	}
+}
+
 WndTree::~WndTree()
 {
 	SetWindowLongPtr(m_hWnd, GWLP_WNDPROC, reinterpret_cast<LONG_PTR>(m_DefaultWndProc));
@@ -187,7 +188,6 @@ WndTree::~WndTree()
 	if (nullptr != m_FileModifiedWakeEvent)
 	{
 		CloseHandle(m_FileModifiedWakeEvent);
->>>>>>> a6f8ae015e913b8bf8fe8a9bf2d5e43b80ef6e58
 	}
 }
 
@@ -213,7 +213,6 @@ LPARAM WndTree::GetItemOrder(const HTREEITEM item) const
 	return order;
 }
 
-<<<<<<< HEAD
 Playlist::Ptr WndTree::NewPlaylist()
 {
 	const int bufSize = 32;
@@ -310,7 +309,8 @@ void WndTree::RenameSelectedPlaylist()
 
 void WndTree::ImportPlaylist(const std::wstring& filename)
 {
-=======
+
+}
 void WndTree::ApplySettings()
 {
 	LOGFONT logFont = GetFont();
@@ -331,8 +331,14 @@ void WndTree::ApplySettings()
 void WndTree::CreateImageList()
 {
 	const float dpiScale = GetDPIScaling();
-
-
->>>>>>> a6f8ae015e913b8bf8fe8a9bf2d5e43b80ef6e58
+	const int cx = static_cast<int>(s_IconSize * dpiScale);
+	const int cy = static_cast<int>(s_IconSize * dpiScale);
+	const int imageCount = 1;
+	m_ImageList = ImageList_Create(cx, cy, ILC_COLOR32, 0, imageCount);
+	HICON hIcon = static_cast<HICON>(LoadImage(m_hInst, MAKEINTRESOURCE(IDI_PLAYLIST), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_SHARED));
+	if (NULL != hIcon)
+	{
+		m_IconMap.insert(IconMap::value_type(Playlist::Type::User, ImageList_ReplaceIcon(m_ImageList, -1, hIcon)));
+	}
 
 }
