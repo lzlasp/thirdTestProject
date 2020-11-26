@@ -340,5 +340,65 @@ void WndTree::CreateImageList()
 	{
 		m_IconMap.insert(IconMap::value_type(Playlist::Type::User, ImageList_ReplaceIcon(m_ImageList, -1, hIcon)));
 	}
+	hIcon = static_cast<HICON>(LoadImage(m_hInst, MAKEINTRESOURCE(IDI_LIBRARY), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_SHARED));
+	if (NULL != hIcon)
+	{
+		m_IconMap.insert(IconMap::value_type(Playlist::Type::All, ImageList_ReplaceIcon(m_ImageList, -1, hIcon)));
+	}
+	hIcon = static_cast<HICON>(LoadImage(m_hInst, MAKEINTRESOURCE(IDI_ARTIST), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_SHARED));
+	if (NULL != hIcon)
+	{
+		m_IconMap.insert(IconMap::value_type(Playlist::Type::Artist, ImageList_ReplaceIcon(m_ImageList, -1, hIcon)));
+	}
+	hIcon = static_cast<HICON>(LoadImage(m_hInst, MAKEINTRESOURCE(IDI_ALBUM), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_SHARED));
+	if (NULL != hIcon)
+	{
+		const int iconIndex = ImageList_ReplaceIcon(m_ImageList, -1, hIcon);
+		m_IconMap.insert(IconMap::value_type(Playlist::Type::Album, iconIndex));
+		m_IconMap.insert(IconMap::value_type(Playlist::Type::CDDA, iconIndex));
+	}
+	hIcon = static_cast<HICON>(LoadImage(m_hInst, MAKEINTRESOURCE(IDI_GENRE), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_SHARED));
+	if (NULL != hIcon)
+	{
+		m_IconMap.insert(IconMap::value_type(Playlist::Type::Genre, ImageList_ReplaceIcon(m_ImageList, -1, hIcon)));
+	}
+	hIcon = static_cast<HICON>(LoadImage(m_hInst, MAKEINTRESOURCE(IDI_YEAR), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_SHARED));
+	if (NULL != hIcon)
+	{
+		m_IconMap.insert(IconMap::value_type(Playlist::Type::Year, ImageList_ReplaceIcon(m_ImageList, -1, hIcon)));
+	}
+	hIcon = static_cast<HICON>(LoadImage(m_hInst, MAKEINTRESOURCE(IDI_FAVOURITES), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_SHARED));
+	if (NULL != hIcon)
+	{
+		m_IconMap.insert(IconMap::value_type(Playlist::Type::Favourites, ImageList_ReplaceIcon(m_ImageList, -1, hIcon)));
+	}
+	hIcon = static_cast<HICON>(LoadImage(m_hInst, MAKEINTRESOURCE(IDI_FOLDER), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_SHARED));
+	if (NULL != hIcon)
+	{
+		m_IconIndexFolder = ImageList_ReplaceIcon(m_ImageList, -1, hIcon);
+		m_IconMap.insert(IconMap::value_type(Playlist::Type::Folder, m_IconIndexFolder));
+	}
+	hIcon = static_cast<HICON>(LoadImage(m_hInst, MAKEINTRESOURCE(IDI_DISK), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_SHARED));
+	if (NULL != hIcon)
+	{
+		m_IconIndexDrive = ImageList_ReplaceIcon(m_ImageList, -1, hIcon);
+	}
+	hIcon = static_cast<HICON>(LoadImage(m_hInst, MAKEINTRESOURCE(IDI_COMPUTER), IMAGE_ICON, cx, cy, LR_DEFAULTCOLOR | LR_SHARED));
+	if (NULL != hIcon)
+	{
+		m_IconIndexComputer = ImageList_ReplaceIcon(m_ImageList, -1, hIcon);
+	}
 
+	TreeView_SetImageList(m_hWnd, m_ImageList, TVSIL_NORMAL);
+}
+
+int WndTree::GetIconIndex(const Playlist::Type type) const
+{
+	int iconIndex = 0;
+	const auto iter = m_IconMap.find(type);
+	if (m_IconMap.end() != iter)
+	{
+		iconIndex = iter->second;
+	}
+	return iconIndex;
 }
